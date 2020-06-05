@@ -13,11 +13,12 @@ loginBtn.onclick = function (element) {
   let formData = new FormData(document.forms.loginForm);
   console.log(formData);
 
-  var strEmail = formData.get("m");
-  var strPassword = formData.get("p");
+  let strEmail = formData.get("m");
+  let strPassword = formData.get("p");
 
-  var strReqUrl = strBaseUrl + "?m=" + strEmail + "&p=" + strPassword;
+  let strReqUrl = strBaseUrl + "?m=" + strEmail + "&p=" + strPassword;
 
+  console.log(strReqUrl);
   xhr.open("GET", strReqUrl);
   xhr.responseType = "json";
   xhr.send();
@@ -28,13 +29,28 @@ xhr.onload = function () {
   if (xhr.status != 200) {
     // レスポンスの HTTP ステータスを解析
     console.log(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
-
+    alert("ログインに失敗しました");
+  } else {
     let responseObj = xhr.response;
     console.log(responseObj); // Hello, world!
     console.log(responseObj.check); // Hello, world!
-  } else {
-    // show the result
-    console.log(`Done, got ${xhr.response.length} bytes`); // responseText is the server
+    let resultLogin = responseObj.check;
+
+    // ログインOKなら
+    if (resultLogin == "OK") {
+      // 期限と一緒にログイン済みをセット
+      const date = new Date();
+      const inc = 1000 * 60 * 60 * 1; // 1時間といったん仮定する
+      const expire = new Date(date.getTime() + inc);
+
+      // dashboardに遷移
+      chrome.storage.sync.set(
+        { islogined: "yes", expire: expire },
+        function () {
+          window.location.href = "dashboard.html";
+        }
+      );
+    }
   }
 };
 

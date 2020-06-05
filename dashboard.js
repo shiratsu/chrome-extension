@@ -10,10 +10,12 @@ chrome.storage.sync.get("logined", function (data) {
   console.log("check logined");
   console.log("Value currently is " + data.logined);
 
-  // ログインしてなければページを切り替える
-  if (data.logined != "isLogined") {
-    console.log("not logined");
+  const expire = data.expire;
+  const date = new Date();
 
+  // ログインしてなければページを切り替える
+  if (expire > date || data.islogined != "yes") {
+    console.log("login is expired");
     window.location.href = "login.html";
   }
 });
