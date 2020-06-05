@@ -1,0 +1,10 @@
+{
+  "name": "ChromeExtension for Client",
+  "version": "1.0",
+  "description": "Build an Extension!",
+  "permissions": ["storage"],
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "dashboard.html"
+  }
+}
