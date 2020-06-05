@@ -15,15 +15,16 @@ var strCity = "";
 var strName = "";
 
 // ローカルstorageからデータとってみる
-chrome.storage.sync.get("islogined", function (data) {
+chrome.storage.local.get("isLogined", function (data) {
   console.log("check logined");
-  console.log("Value currently is " + data.islogined);
+  console.log("Value currently is " + data.isLogined);
 
   const expire = data.expire;
   const date = new Date();
 
   // ログインしてなければページを切り替える
-  if (expire > date || data.islogined != "yes") {
+  // if (expire > date || data.isLogined != "yes") {
+  if (data.isLogined != "yes") {
     console.log("login is expired");
     window.location.href = "login.html";
   }

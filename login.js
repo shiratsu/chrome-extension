@@ -41,12 +41,13 @@ xhr.onload = function () {
       const inc = 1000 * 60 * 60 * 1; // 1時間といったん仮定する
       const expire = new Date(date.getTime() + inc);
       var syncData = {};
-      syncData["isLogined"] = "yes";
-      syncData["expire"] = expire;
-      s;
+      var keysiLogined = "isLogined";
+      var keyexpire = "expire";
+      syncData[keysiLogined] = "yes";
+      syncData[keyexpire] = expire;
 
       // dashboardに遷移
-      chrome.storage.sync.set(syncData, function () {
+      chrome.storage.local.set(syncData, function () {
         window.location.href = "dashboard.html";
       });
     }
