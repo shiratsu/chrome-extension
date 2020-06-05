@@ -30,13 +30,16 @@ chrome.storage.local.get("isLogined", function (data) {
   }
 });
 
+// フリわけボタンアクション
 furiwake.onclick = function (element) {
   console.log("furiwake");
   console.log(content.value);
 
   strText = content.value;
+  strText = strText.replace(/\r?\n\s/g, "");
+  console.log(strText);
   const aryNumber = strText.match(
-    /([0-9]{10,11}|[0-9]{2,4}-[0-9]{2,4}-[0-9]{4})/g
+    /([0-9]{8,11}|[0-9]{2,4}-[0-9]{2,4}-[0-9]{4})/g
   );
   const aryNotNumber = strText.match(/[^\d-]{1,}/g);
 
@@ -49,6 +52,7 @@ furiwake.onclick = function (element) {
   requestLocate();
 };
 
+// 決定ボタンアクション
 decide.onclick = function (element) {
   console.log("decide");
   postStoreInfo();
@@ -65,8 +69,8 @@ function requestLocate() {
 }
 
 function postStoreInfo() {
-  //TODO: 以下を置き換える
   isPostStoreInfo = true;
+  //TODO: 以下を置き換える
   const strBaseUrl = "https://xxxx/storeinfo.php";
 
   // URLを作成
