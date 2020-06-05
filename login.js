@@ -1,6 +1,6 @@
 let loginBtn = document.getElementById("login");
 
-// こちらは正しいURLに置き換えてください。
+// TODO:こちらは正しいURLに置き換えてください。
 let strBaseUrl =
   "https://shiratsu.github.io/sample-answer-json/sample-answer.json";
 
@@ -8,14 +8,14 @@ let strBaseUrl =
 let xhr = new XMLHttpRequest();
 
 loginBtn.onclick = function (element) {
-  console.log("loginBtn");
-  // pre-fill FormData from the form
+  // formのデータを取得
   let formData = new FormData(document.forms.loginForm);
-  console.log(formData);
 
+  // メアドとパスワードを取り出す
   let strEmail = formData.get("m");
   let strPassword = formData.get("p");
 
+  // URLを作成
   let strReqUrl = strBaseUrl + "?m=" + strEmail + "&p=" + strPassword;
 
   console.log(strReqUrl);
@@ -32,8 +32,6 @@ xhr.onload = function () {
     alert("ログインに失敗しました");
   } else {
     let responseObj = xhr.response;
-    console.log(responseObj); // Hello, world!
-    console.log(responseObj.check); // Hello, world!
     let resultLogin = responseObj.check;
 
     // ログインOKなら
@@ -42,14 +40,15 @@ xhr.onload = function () {
       const date = new Date();
       const inc = 1000 * 60 * 60 * 1; // 1時間といったん仮定する
       const expire = new Date(date.getTime() + inc);
+      var syncData = {};
+      syncData["isLogined"] = "yes";
+      syncData["expire"] = expire;
+      s;
 
       // dashboardに遷移
-      chrome.storage.sync.set(
-        { islogined: "yes", expire: expire },
-        function () {
-          window.location.href = "dashboard.html";
-        }
-      );
+      chrome.storage.sync.set(syncData, function () {
+        window.location.href = "dashboard.html";
+      });
     }
   }
 };
