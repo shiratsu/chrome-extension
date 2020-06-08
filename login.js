@@ -37,12 +37,15 @@ xhr.onload = function () {
     // ログインOKなら
     if (resultLogin == "OK") {
       // 期限と一緒にログイン済みをセット
-      const date = new Date();
-      const inc = 1000 * 60 * 60 * 1; // 1時間といったん仮定する
-      const expire = new Date(date.getTime() + inc);
+      const dt = new Date();
+
+      //X分後を指定(TODO:2のところを設定したいタイムアウトに書き換えてください)
+      const expire = dt.setMinutes(dt.getMinutes() + 2);
+
       var syncData = {};
       var keysiLogined = "isLogined";
       var keyexpire = "expire";
+      console.log(expire);
       syncData[keysiLogined] = "yes";
       syncData[keyexpire] = expire;
 

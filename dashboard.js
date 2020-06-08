@@ -15,16 +15,19 @@ var strCity = "";
 var strName = "";
 
 // ローカルstorageからデータとってみる
-chrome.storage.local.get("isLogined", function (data) {
+chrome.storage.local.get(["isLogined", "expire"], function (data) {
   console.log("check logined");
   console.log("Value currently is " + data.isLogined);
+  console.log("expire is " + data.expire);
 
   const expire = data.expire;
   const date = new Date();
+  console.log("date is " + date);
+  console.log("time is " + date.getTime());
 
   // ログインしてなければページを切り替える
-  // if (expire > date || data.isLogined != "yes") {
-  if (data.isLogined != "yes") {
+  if (expire < date || data.isLogined != "yes") {
+    // if (data.isLogined != "yes") {
     console.log("login is expired");
     window.location.href = "login.html";
   }
